@@ -119,6 +119,8 @@ class ResNet(object):
 
     with tf.variable_scope('logit'):
       logits = self._fully_connected(x, self.hps.num_classes)
+      # Added by reza
+      self.logits=logits                            
       self.predictions = tf.nn.softmax(logits)
 
     with tf.variable_scope('costs'):

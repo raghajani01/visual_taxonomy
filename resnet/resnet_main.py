@@ -144,9 +144,15 @@ def evaluate(hps):
 
     total_prediction, correct_prediction = 0, 0
     for _ in six.moves.range(FLAGS.eval_batch_count):
-      (summaries, loss, predictions, truth, train_step) = sess.run(
-          [model.summaries, model.cost, model.predictions,
+      (summaries, loss,logits, predictions, truth, train_step) = sess.run(
+          [model.summaries, model.cost, model.logits, model.predictions,
            model.labels, model.global_step])
+      
+      file_handler_logits = open('logits.csv', 'a')
+      with file_handler_logits:
+          writer = csv.writer(file_handler_logits)
+          writer.writerows(logits)
+
       file_handler_pred = open('predictions.csv', 'a')
       with file_handler_pred:
           writer = csv.writer(file_handler_pred)
